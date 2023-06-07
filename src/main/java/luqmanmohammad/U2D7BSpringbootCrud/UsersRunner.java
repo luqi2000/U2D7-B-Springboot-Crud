@@ -25,7 +25,7 @@ public class UsersRunner implements CommandLineRunner{
 			
 			User user = new User(name,surname,email);
 			
-			usersService.create(user);
+			//usersService.create(user);
 		}
 		
 	}

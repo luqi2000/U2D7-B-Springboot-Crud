@@ -7,6 +7,9 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import luqmanmohammad.U2D7BSpringbootCrud.exceptions.BadRequestException;
+import luqmanmohammad.U2D7BSpringbootCrud.exceptions.NotFoundException;
+
 @Service
 public class UsersService {
 	
@@ -15,6 +18,8 @@ public class UsersService {
 	
 	//crea un utente dato uno User u e lo salva
 	public User create(User u) {
+		usersRepo.findByEmail(u.getEmail()).ifPresent(user ->{throw new BadRequestException("Email" + u.getEmail() + "already exist");
+		});
 		return usersRepo.save(u);
 	}
 	
@@ -26,7 +31,7 @@ public class UsersService {
 	
 	//ritorna un utente dato un id
 	public User findById(UUID id) throws Exception{
-		return usersRepo.findById(id).orElseThrow(()-> new Exception("Utente non trovato"));
+		return usersRepo.findById(id).orElseThrow(()-> new NotFoundException("Utente non trovato"));
 	}
 	
 	//dato un id modificalo
